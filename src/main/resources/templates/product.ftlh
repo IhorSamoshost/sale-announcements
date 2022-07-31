@@ -8,7 +8,7 @@
 <body>
 <h1>${product.title}</h1>
 <hr>
-<h3>Detailed product info:</h3><br/>
+<h3>Detailed product info:</h3>
 <#list images as image>
     <img src="/images/${image.id}" height="68px" alt=""/><br/>
 </#list>
