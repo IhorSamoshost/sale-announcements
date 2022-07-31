@@ -32,7 +32,7 @@
 <#if user.email??>
     <hr/>
     <h3>Create new product</h3>
-    <form action="products/" method="post" enctype="multipart/form-data">
+    <form action="/products" method="post" enctype="multipart/form-data">
         <p>Product title: <input type="text" name="title"/></p>
         <p>Product description: <textarea rows="2" name="description"></textarea></p>
         <p>Product price: <input type="number" step="0.01" name="price"/></p>

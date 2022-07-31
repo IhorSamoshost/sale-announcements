@@ -1,7 +1,6 @@
 package com.training.saleannouncements.controllers;
 
 import com.training.saleannouncements.domain.User;
-import com.training.saleannouncements.repositories.UserRepository;
 import com.training.saleannouncements.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.security.Principal;
 
 @RequiredArgsConstructor
 @Controller
@@ -36,8 +33,9 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/hello")
-    public String show() {
-        return "products";
+    @GetMapping("users/{user}")
+    public String show(@PathVariable User user, Model model) {
+        model.addAttribute("user", user);
+        return "user";
     }
 }
