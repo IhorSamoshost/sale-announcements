@@ -15,8 +15,8 @@
 <p>Product description: ${product.description}</p>
 <p>Price: <b>$${product.price}</b></p>
 <p>City: ${product.city}</p>
-<p>Seller: ${product.user.name}</p>
-<p>Phone number: ${product.user.phoneNumber}</p>
+<p>Seller: <a href="/users/${seller.id}">${seller.name}</a></p>
+<p>Phone number: ${seller.phoneNumber}</p>
 <hr>
 <form action="delete/${product.id}" method="post">
     <input type="submit" value="Delete product">

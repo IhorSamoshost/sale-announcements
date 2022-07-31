@@ -4,14 +4,12 @@ import com.training.saleannouncements.domain.Product;
 import com.training.saleannouncements.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @RequiredArgsConstructor
@@ -33,7 +31,7 @@ public class ProductController {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         model.addAttribute("images", product.getImages());
-        model.addAttribute("seller", product.getUser().getName());
+        model.addAttribute("seller", product.getUser());
         return "product";
     }
 
