@@ -14,6 +14,9 @@
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <button type="submit">Logout</button>
     </form>
+    <#if user.isAdmin()>
+        <a href="/admin">Administration panel</a>
+    </#if>
 <#else>
     <a href="/login">Log in</a>
 </#if>

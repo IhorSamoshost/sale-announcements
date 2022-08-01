@@ -1,9 +1,7 @@
 package com.training.saleannouncements.domain;
 
 import com.training.saleannouncements.domain.enums.Role;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -42,6 +40,10 @@ public class User implements UserDetails {
     }
 
     //    security
+    public boolean isAdmin() {
+        return roles.contains(Role.ROLE_ADMIN);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
