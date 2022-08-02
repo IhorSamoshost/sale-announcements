@@ -1,0 +1,27 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <property name="now" value="LOCALTIMESTAMP" dbms="postgresql"/>
+
+    <changeSet id="1" author="IhorSamoshost">
+        <comment>Add admin9 to table 'users'</comment>
+        <insert tableName="users">
+            <column name="email" value="admin9@test.com"/>
+            <column name="phone_number" value="+380999999999"/>
+            <column name="name" value="admin9"/>
+            <column name="password" value="$2a$08$9EbqOwei05wX.0smmV48IOwfYLrIn3olgZl1hU58f6G.I2o291B2K"/>
+            <column name="is_active" valueBoolean="true"/>
+            <column name="created_at" valueDate="${now}"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="2" author="IhorSamoshost">
+        <comment>Add role for admin9 to table 'user_role'</comment>
+        <sql>
+            INSERT INTO user_role (user_id, roles) VALUES (
+            (SELECT id FROM users WHERE users.name = 'admin9'), 'ROLE_ADMIN')
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
