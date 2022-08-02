@@ -1,26 +1,49 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sales Announcements</title>
-</head>
-<body>
-<h1>${product.title}</h1>
-<hr>
-<h3>Detailed product info:</h3>
-<#list images as image>
-    <img src="/images/${image.id}" height="68px" alt=""/><br/>
-</#list>
-<p>Product description: ${product.description}</p>
-<p>Price: <b>$${product.price}</b></p>
-<p>City: ${product.city}</p>
-<p>Seller: <a href="/users/${seller.id}">${seller.name}</a></p>
-<p>Phone number: ${seller.phoneNumber}</p>
-<hr>
-<form action="delete/${product.id}" method="post">
-    <input type="submit" value="Delete product">
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
-</form>
-</body>
-</html>
+<#import "blocks/layout.ftlh" as l>
+<@l.template currentUser>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <#list images as image>
+                <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+            </#list>
+        </ol>
+        <div class="carousel-inner">
+            <#list images as image>
+                <div class="carousel-item <#if image.previewImage>active</#if>">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                         role="img" aria-label=" :  " preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title></title>
+                        <rect width="100%" height="100%" fill="#777"></rect>
+                        <text x="50%" y="50%" fill="#777" dy=".3em"></text>
+                    </svg>
+
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <a href="/images/${image.id}">
+                                <img class="product" style="height: 100px" src="/images/${image.id}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </#list>
+        </div>
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <hr>
+    <p><h2 style="text-align: center">${product.title} | $ ${product.price}</h2></p>
+    <p style="text-align: center">${product.description}</p>
+    <p style="text-align: center">City: ${product.city}</p>
+    <p style="text-align: center">Seller phone number: <b>${seller.phoneNumber}</b></p>
+    <hr>
+    <p style="text-align: center">
+        <a href="/users/${seller.id}">
+            <img src="/static/images/avatar.png" alt="mdo" width="32" height="32" class="rounded-circle"> ${seller.name}
+        </a>
+    </p>
+</@l.template>

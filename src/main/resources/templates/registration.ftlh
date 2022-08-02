@@ -1,24 +1,28 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sales Announcements</title>
-</head>
-<body>
-<h1>Registration form</h1>
-<hr>
-<form action="/registration" method="post">
-    Username: <input type="text" name="name"><br/><br/>
-    Email: <input type="email" name="email"><br/><br/>
-    Phone number: <input type="text" name="phoneNumber"><br/><br/>
-    Password: <input type="password" name="password"><br/><br/>
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
-    <button type="submit">Sign up</button>
-</form>
-<#if errorMessage??>
-    <br/><br/>
-    <h2 style="color: red">${errorMessage}</h2>
-</#if>
-</body>
-</html>
+<#import "blocks/layout.ftlh" as l>
+<@l.template user>
+    <h1 style="text-align: center">Registration form</h1>
+    <hr>
+    <form action="/registration" method="post">
+        <div class="form-group">
+            <label for="name">Username</label>
+            <input type="text" class="form-control" required id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" required name="email">
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone number</label>
+            <input type="text" class="form-control" id="phoneNumber" required name="phoneNumber">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" required name="password">
+        </div>
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <button type="submit" style="width: 100%" class="btn btn-dark">Sign up</button>
+    </form>
+    <#if errorMessage??>
+        <h2 style="color: red">${errorMessage}</h2>
+    </#if>
+</@l.template>
