@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,10 @@ public class UserService {
                 .filter(roles::contains)
                 .forEach(key -> user.getRoles().add(Role.valueOf(key)));
         userRepository.save(user);
-        log.info("Roles of user with id = {} was changed", user.getId());
+        log.info("Roles of currentUser with id = {} was changed", user.getId());
+    }
+
+    public User getUserByPrincipal(Principal principal) {
+        return principal != null ? userRepository.findByEmail(principal.getName()) : new User();
     }
 }
