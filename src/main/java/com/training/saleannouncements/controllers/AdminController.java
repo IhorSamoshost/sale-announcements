@@ -7,10 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Map;
@@ -18,23 +15,24 @@ import java.util.Map;
 @Controller
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequiredArgsConstructor
+@RequestMapping("admin")
 public class AdminController {
     private final UserService userService;
 
-    @GetMapping("/admin")
+    @GetMapping
     public String adminPanel(Model model, Principal principal) {
         model.addAttribute("users", userService.getAll());
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin-panel";
     }
 
-    @PostMapping("/admin/users/ban/{id}")
+    @PostMapping("/users/ban/{id}")
     public String changeBanStatus(@PathVariable Long id) {
         userService.changeUserActiveStatus(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/users/edit/{user}")
+    @GetMapping("/users/edit/{user}")
     public String edit(@PathVariable User user, Model model, Principal principal) {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
@@ -42,7 +40,7 @@ public class AdminController {
         return "user-edit";
     }
 
-    @PostMapping("/admin/users/edit")
+    @PostMapping("/users/edit")
     public String updateRoles(@RequestParam("userId") User user, @RequestParam Map<String, String> form) {
         userService.changeUserRoles(user, form);
         return "redirect:/admin";
