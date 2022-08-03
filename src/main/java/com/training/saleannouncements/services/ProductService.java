@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,11 +22,14 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    public List<Product> productList(String title) {
-        if (title != null && !title.isBlank()) {
-            return productRepository.findAllByTitleContainingIgnoreCase(title);
-        }
-        return productRepository.findAll();
+    public List<Product> productList(String title, String city) {
+        return (title != null && !title.isBlank()) && (city != null && !city.isBlank()) ?
+                productRepository.findAllByTitleContainingIgnoreCaseAndCityContainingIgnoreCase(title, city) :
+                (title != null && !title.isBlank()) && (city == null || city.isBlank()) ?
+                        productRepository.findAllByTitleContainingIgnoreCase(title) :
+                        (title == null || title.isBlank()) && (city != null && !city.isBlank()) ?
+                                productRepository.findAllByCityContainingIgnoreCase(city) :
+                                productRepository.findAll();
     }
 
     public void saveProduct(Principal principal, Product product, List<MultipartFile> imageFiles) throws IOException {
@@ -77,5 +81,9 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    public List<String> getAllProductCities() {
+        return productList(null, null).stream().map(Product::getCity).distinct().collect(Collectors.toList());
     }
 }

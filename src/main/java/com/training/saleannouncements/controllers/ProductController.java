@@ -21,9 +21,14 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public String list(@RequestParam(name = "searchWord", required = false) String title, Model model, Principal principal) {
-        model.addAttribute("products", productService.productList(title));
+    public String list(@RequestParam(name = "searchWord", required = false) String title,
+                       @RequestParam(name = "searchCity", required = false) String city,
+                       Model model, Principal principal) {
+        model.addAttribute("products", productService.productList(title, city));
+        model.addAttribute("cities", productService.getAllProductCities());
         model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("searchedWord", title);
+        model.addAttribute("searchedCity", city);
         return "products";
     }
 
